@@ -1,0 +1,11 @@
+---
+name: ping
+pack: st2_101
+description: Simple ping based diagnostic with Mistral.
+runner_type: mistral-v2 # Yes, the runner is Mistral
+entry_point: workflows/ping.yaml # Reference to workflow definition.
+enabled: True
+parameters:
+  host: # We start with a single host
+    required: true
+    type: string

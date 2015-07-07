@@ -1,0 +1,6 @@
+---
+name : st2_101 # Name must match the folder name
+description : StackStorm samples and tutorials
+version : 0.1
+author : dzimine
+email : dz@stackstorm.com

@@ -1,0 +1,19 @@
+---
+name: ping.on_cron
+pack: "st2_101"
+description: Fire a ping diagnostic workflow regularly.
+enabled: true
+
+trigger:
+    type: core.st2.CronTimer
+    parameters:
+        timezone: "UTC"
+        hour: 1
+        minute: 10
+        second: 0
+criteria: {}
+
+action:
+    ref: st2_101.ping
+    parameters:
+        host: mail.ru
