@@ -1,5 +1,5 @@
 ---
-name: ping.on_cron
+name: ping.hourly
 pack: "st2_101"
 description: Fire a ping diagnostic workflow regularly.
 enabled: true
@@ -8,7 +8,6 @@ trigger:
     type: core.st2.CronTimer
     parameters:
         timezone: "UTC"
-        hour: 1
         minute: 10
         second: 0
 criteria: {}
