@@ -32,4 +32,4 @@ st2_101.ping: # IMPORTANT: the name of the workflow must match the fully-qualifi
             input:
                 message: |
                     No ping to <% $.host %>. Check it out:
-                    http://172.168.50.11:8080/#/history/<% $.__env.st2_execution_id %>
+                    http://172.168.50.11:8080/#/history/<% env().st2_execution_id %>
