@@ -12,10 +12,22 @@ st2_101.ping: # IMPORTANT: the name of the workflow must match the fully-qualifi
         # For now, just publish the whole workflow end-state. Helps debugging.
 
     tasks:
+        # This task looks up the st2 server address dynamically but assumes there is only one interface.
+        # Multiple interfaces will cause an error on post_error_to_slack.message URL.  
+        get_addr:
+            action: core.local cmd="/sbin/ip -o -4 addr list | awk '$0 !~ /127.0.0.1/ {print $4}' | sed 's/\/.*//'"
+            publish:
+                st2_ip: <% task(get_addr).result.stdout %>
+            on-success:
+                - ping_host
+            on-error:
+                - post_error_to_slack
+                - fail
+
         ping_host:
             action: core.local cmd="ping -c 1 -w 1 <% $.host %>"
             publish:
-                ping_output: <% $.ping_host.stdout %>
+            ping_output: <% task(ping_host).result.stdout %>
             on-success: 
                 -  append_stats
             on-error:
@@ -32,4 +44,4 @@ st2_101.ping: # IMPORTANT: the name of the workflow must match the fully-qualifi
             input:
                 message: |
                     No ping to <% $.host %>. Check it out:
-                    http://172.168.50.11:8080/#/history/<% env().st2_execution_id %>
+                    http://<% $.st2_ip %>:8080/#/history/<% env().st2_execution_id %>
