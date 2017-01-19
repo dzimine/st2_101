@@ -27,7 +27,7 @@ st2_101.ping: # IMPORTANT: the name of the workflow must match the fully-qualifi
         ping_host:
             action: core.local cmd="ping -c 1 -w 1 <% $.host %>"
             publish:
-            ping_output: <% task(ping_host).result.stdout %>
+                ping_output: <% task(ping_host).result.stdout %>
             on-success: 
                 -  append_stats
             on-error:
